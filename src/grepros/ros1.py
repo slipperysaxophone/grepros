@@ -108,6 +108,11 @@ class BagReader(rosbag.Bag):
 
         @param   typehash  message type definition hash, if any
         """
+        if typehash is None:
+            for type_def_name, type_def_hash in self.__TYPEDEFS.keys():
+                if type_def_name == typename:
+                    typehash = type_def_hash
+                    break
         typekey = (typename, typehash)
         self.__ensure_typedef(typename, typehash)
         if typekey not in self.__TYPES and typekey in self.__TYPEDEFS:
